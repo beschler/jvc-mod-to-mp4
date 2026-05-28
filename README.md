@@ -6,7 +6,25 @@ Tested on macOS Sequoia with an Apple M2 Pro. Should work on any macOS version w
 
 ---
 
-## Supported Hardware
+## Table of Contents
+
+1. [Supported Hardware](#1-supported-hardware)
+2. [What the Script Does](#2-what-the-script-does)
+3. [Output File Naming](#3-output-file-naming)
+4. [Modes](#4-modes)
+   - [4.1 Default Mode - H.265, Square Pixels](#41-default-mode--h265-square-pixels-recommended)
+   - [4.2 Archive Mode - H.264, Non-Square Pixels](#42-archive-mode--h264-non-square-pixels)
+5. [Prerequisites](#5-prerequisites)
+6. [Installation](#6-installation)
+7. [Folder Structure](#7-folder-structure)
+8. [Usage](#8-usage)
+9. [Example Output](#9-example-output)
+10. [Notes on Colour Accuracy](#10-notes-on-colour-accuracy)
+11. [Encoding Details](#11-encoding-details)
+
+---
+
+## 1. Supported Hardware
 
 | Camcorder | Region | Frame Rate |
 |---|---|---|
@@ -16,7 +34,7 @@ Tested on macOS Sequoia with an Apple M2 Pro. Should work on any macOS version w
 
 ---
 
-## What the Script Does
+## 2. What the Script Does
 
 - Finds `.mod` files inside `input/PRG###/` subfolders, mirroring the camcorder's native folder structure. Falls back to files placed directly in `input/` if no `PRG` subfolders are present (treated as `PRG001`).
 - Reads the `.moi` sidecar file paired with each `.mod` to extract the original recording date and time.
@@ -38,7 +56,7 @@ Tested on macOS Sequoia with an Apple M2 Pro. Should work on any macOS version w
 
 ---
 
-## Output File Naming
+## 3. Output File Naming
 
 ```
 MOV{PRG}--{INT}--{DATE}.mp4
@@ -66,9 +84,9 @@ input/PRG002/MOV001.MOD  →  output/MOV002--1--2025-09-09.mp4
 
 ---
 
-## Modes
+## 4. Modes
 
-### Default Mode - H.265, Square Pixels (recommended)
+### 4.1 Default Mode - H.265, Square Pixels (recommended)
 
 ```bash
 bash jvc-mod-to-mp4.sh
@@ -85,7 +103,7 @@ Scales the video to its correct square-pixel display resolution and encodes as *
 
 The script automatically detects whether Apple's hardware H.265 encoder is available by running a short test encode at startup. If hardware encoding is available it is used; otherwise the software encoder is selected transparently with no action required.
 
-### Archive Mode - H.264, Non-Square Pixels
+### 4.2 Archive Mode - H.264, Non-Square Pixels
 
 ```bash
 bash jvc-mod-to-mp4.sh -a
@@ -97,7 +115,7 @@ No scaling is applied. The SAR (non-square pixel) flag from the source MPEG-2 st
 
 ---
 
-## Prerequisites
+## 5. Prerequisites
 
 ### Required
 
@@ -124,7 +142,7 @@ which SetFile
 
 ---
 
-## Installation
+## 6. Installation
 
 **1. Install Homebrew** (if not already installed):
 
@@ -153,7 +171,7 @@ cd jvc-mod-to-mp4
 
 ---
 
-## Folder Structure
+## 7. Folder Structure
 
 Place the script in a dedicated working directory. The script will automatically create `input/` and `output/` folders adjacent to itself on first run.
 
@@ -196,7 +214,7 @@ The `.moi` sidecar files do not need to be removed from the input folder - the s
 
 ---
 
-## Usage
+## 8. Usage
 
 Navigate to the folder containing the script:
 
@@ -220,7 +238,7 @@ bash jvc-mod-to-mp4.sh -a
 
 ---
 
-## Example Output
+## 9. Example Output
 
 ```
 ════════════════════════════════════════════
@@ -248,7 +266,7 @@ bash jvc-mod-to-mp4.sh -a
 
 ---
 
-## Notes on Colour Accuracy
+## 10. Notes on Colour Accuracy
 
 The script embeds BT.601 PAL colour space metadata into every output file. Standards-compliant players (VLC, IINA, DaVinci Resolve) will display colours correctly and identically to the original `.mod` files.
 
@@ -256,7 +274,7 @@ The script embeds BT.601 PAL colour space metadata into every output file. Stand
 
 ---
 
-## Encoding Details
+## 11. Encoding Details
 
 | Property | Default Mode | Archive Mode |
 |---|---|---|
